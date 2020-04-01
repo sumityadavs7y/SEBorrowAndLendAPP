@@ -215,4 +215,13 @@ class MyBooks with ChangeNotifier {
       throw HttpException('Got Some error');
     }
   }
+
+  Future<void> sendBlockRequest(int bookId) async{
+    final String url = Auth.domain+'/block/book/$bookId';
+    final response = await http.get(url, headers: _header);
+    if(response.statusCode>=300){
+      final responseData = json.decode(response.body);
+      throw HttpException(responseData['messsage']);
+    }
+  }
 }

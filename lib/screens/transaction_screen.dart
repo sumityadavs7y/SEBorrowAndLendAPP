@@ -64,10 +64,11 @@ class TransactionItem extends StatelessWidget {
     final scaffold = Scaffold.of(context);
     DateFormat format = new DateFormat("dd-MM-yyyy");
     String status = transaction.isBookOwner ? 'Lent' : 'Borrowed';
+    String returnedDate = transaction.returnedDate==null?'not returned' : format.format(transaction.returnedDate);
     return ListTile(
         title: Text(status + ' : ' + transaction.bookName),
         subtitle: Text(
-            "Borrowed: ${format.format(transaction.borrowedDate)}, Returned: ${format.format(transaction.returnedDate)}"),
+            "Borrowed: ${format.format(transaction.borrowedDate)}, Returned: $returnedDate"),
         trailing: IconButton(
           icon: Icon(Icons.info_outline),
           onPressed: () => _showTransactionDetail(context),

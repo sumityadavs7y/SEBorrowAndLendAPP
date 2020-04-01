@@ -15,11 +15,11 @@ class SearchBookItem extends StatelessWidget {
         });
   }
 
-  void _showErrorDialog(BuildContext context, String message) {
+  void _showDialog(BuildContext context,String title, String message) {
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
-        title: Text('An Error Occured'),
+        title: Text(title),
         content: Text(message),
         actions: <Widget>[
           FlatButton(
@@ -57,7 +57,7 @@ class SearchBookItem extends StatelessWidget {
                   scaffold
                       .showSnackBar(SnackBar(content: Text('request sent')));
                 } catch (error) {
-                  _showErrorDialog(context, error.toString());
+                  _showDialog(context, "An Error Occured",error.toString());
                 }
               },
               color: Theme.of(context).primaryColor,
@@ -69,8 +69,24 @@ class SearchBookItem extends StatelessWidget {
 
 class BookDetailSheet extends StatelessWidget {
   final int bookId;
+  final BuildContext ctx;
+  const BookDetailSheet({this.ctx,this.bookId});
 
-  const BookDetailSheet({this.bookId});
+  void _showDialog(BuildContext context,String title, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
+        title: Text(title),
+        content: Text(message),
+        actions: <Widget>[
+          FlatButton(
+            child: Text('Okay'),
+            onPressed: () => Navigator.of(context).pop(),
+          )
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +105,19 @@ class BookDetailSheet extends StatelessWidget {
                   '$k: $v',
                   style: Theme.of(context).textTheme.title,
                 )));
+            list.add(RaisedButton(
+              child: Text('Report'),
+              onPressed: () async {
+                try{
+                  await Provider.of<MyBooks>(context, listen: false).sendBlockRequest(bookId);
+                  _showDialog(context,'Message','report sent');
+                }catch(error){
+                  _showDialog(context,'An Error Occured','report sent failed');
+                }
+              },
+            ));
             return Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.all(15),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: list,

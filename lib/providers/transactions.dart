@@ -31,6 +31,7 @@ class Transaction {
 
   Map<String, String> toJson() {
     DateFormat format = new DateFormat("dd-MM-yyyy");
+    String returnDate = this.returnedDate==null?'not returned' : format.format(this.returnedDate);
     return {
       "Book name": bookName,
       "Book author": bookAuthor,
@@ -39,7 +40,7 @@ class Transaction {
       "Borrower name": borrowerName,
       "Borrower contact": borrowerContact,
       "Borrower date": format.format(borrowedDate),
-      "Return date": format.format(returnedDate)
+      "Return date": returnDate
     };
   }
 }
@@ -77,7 +78,8 @@ class Transactions with ChangeNotifier {
     final rawTransactions = json.decode(response.body)['transactions'];
     // print(response.body);
     rawTransactions.forEach((transactionData) {
-      print(transactionData['id']);
+      print(transactionData['borrow_date']);
+      print(transactionData['return_date']);
       _loadedTransaction.add(Transaction(
         id: transactionData['id'],
         bookName: transactionData['book']['title'],

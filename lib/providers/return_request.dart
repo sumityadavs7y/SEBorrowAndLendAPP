@@ -73,6 +73,7 @@ class ReturnRequests with ChangeNotifier {
     final String url = Auth.domain + '/returnrequest/$requestId/response';
     final response = await http.post(url,
         headers: _header, body: json.encode({'response': status}));
+    print(response.body);
     if (response.statusCode < 500 && response.statusCode >= 300) {
       throw HttpException(json.decode(response.body)['message']);
     } else if (response.statusCode >= 500) {
