@@ -69,10 +69,12 @@ class ReturnRequests with ChangeNotifier {
     }
   }
 
-  Future<void> respondToRequest(int requestId, bool status) async {
+  Future<void> respondToRequest(int requestId, bool status,
+      {double rating = 1}) async {
     final String url = Auth.domain + '/returnrequest/$requestId/response';
     final response = await http.post(url,
-        headers: _header, body: json.encode({'response': status}));
+        headers: _header,
+        body: json.encode({'response': status, 'rating': rating.toInt()}));
     print(response.body);
     if (response.statusCode < 500 && response.statusCode >= 300) {
       throw HttpException(json.decode(response.body)['message']);

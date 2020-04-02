@@ -1,5 +1,6 @@
 import 'package:borrow_and_lend_nitc/providers/return_request.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class ReturnRequestScreen extends StatelessWidget {
@@ -44,6 +45,7 @@ class ReturnRequestScreen extends StatelessWidget {
 
 class RequestItem extends StatelessWidget {
   final ReturnRequest request;
+  var rating = 0.0;
 
   RequestItem(this.request);
 
@@ -63,6 +65,69 @@ class RequestItem extends StatelessWidget {
     );
   }
 
+  void _showRatingDialog(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            title: Text('Rating'),
+            content: RatingBar(
+                initialRating: 3,
+                minRating: 1,
+                direction: Axis.horizontal,
+                allowHalfRating: false,
+                itemCount: 5,
+                itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                itemBuilder: (context, index) {
+                  switch (index) {
+                    case 0:
+                      return Icon(
+                        Icons.sentiment_very_dissatisfied,
+                        color: Colors.red,
+                      );
+                    case 1:
+                      return Icon(
+                        Icons.sentiment_dissatisfied,
+                        color: Colors.redAccent,
+                      );
+                    case 2:
+                      return Icon(
+                        Icons.sentiment_neutral,
+                        color: Colors.amber,
+                      );
+                    case 3:
+                      return Icon(
+                        Icons.sentiment_satisfied,
+                        color: Colors.lightGreen,
+                      );
+                    case 4:
+                      return Icon(
+                        Icons.sentiment_very_satisfied,
+                        color: Colors.green,
+                      );
+                  }
+                  return Container(
+                    child: null,
+                  );
+                },
+                onRatingUpdate: (rate) {
+                  rating = rate;
+                }),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Return'),
+                onPressed: () {
+                  Provider.of<ReturnRequests>(context, listen: false)
+                      .respondToRequest(request.id, true, rating: rating);
+                  scaffold.showSnackBar(SnackBar(content: Text('accepted')));
+                },
+              )
+            ],
+          );
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     final scaffold = Scaffold.of(context);
@@ -76,9 +141,7 @@ class RequestItem extends StatelessWidget {
             icon: Icon(Icons.check),
             onPressed: () async {
               try {
-                Provider.of<ReturnRequests>(context, listen: false)
-                    .respondToRequest(request.id, true);
-                scaffold.showSnackBar(SnackBar(content: Text('accepted')));
+                _showRatingDialog(context);
               } catch (error) {
                 _showErrorDialog(context, error.toString());
               }
