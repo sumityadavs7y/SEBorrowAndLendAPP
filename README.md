@@ -1,6 +1,8 @@
-# borrow_and_lend_nitc
+# Borrow and Lend NITC
 
-A new Flutter project.
+The purpose of this flutter project is to develop an app for NITC students to borrow and lend books within
+themselves. This app will help students borrow and lend books more easily as compared to library.
+This app will be in the sole benefit of students only.
 
 ## Getting Started
 
