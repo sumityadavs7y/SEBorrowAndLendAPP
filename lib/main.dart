@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           return MaterialApp(
             title: 'Borrow and Lend NITC',
             theme: ThemeData(
-              primarySwatch: Colors.blue,
+              primarySwatch: Colors.deepPurple,
               accentColor: Colors.deepOrange,
             ),
             home: auth.isAuth

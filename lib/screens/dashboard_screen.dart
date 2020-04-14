@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:borrow_and_lend_nitc/providers/transactions.dart';
 import 'package:borrow_and_lend_nitc/screens/borrow_request_screen.dart';
 import 'package:borrow_and_lend_nitc/screens/due_book_screen.dart';
@@ -47,6 +49,20 @@ class _DashboardScreenState extends State<DashboardScreen> {
     }
   }
 
+  MaterialColor getRandomColor() {
+    List<MaterialColor> colors = [
+      Colors.blue,
+      Colors.purple,
+      Colors.red,
+      Colors.teal,
+      Colors.deepOrange,
+      Colors.green,
+      Colors.amber,
+      Colors.deepPurple
+    ];
+    return colors[Random().nextInt(colors.length)];
+  }
+
   Widget getGridItem(BuildContext ctx, String title, Function navigate) {
     return InkWell(
       onTap: () => navigate(),
@@ -60,7 +76,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blue.withOpacity(0.3), Colors.blue],
+            colors: [getRandomColor().withOpacity(0.3), getRandomColor()],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

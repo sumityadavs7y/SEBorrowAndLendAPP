@@ -103,7 +103,7 @@ class MyBooks with ChangeNotifier {
       _books.add(newBook);
       notifyListeners();
     } else {
-      throw HttpException('Got Some error');
+      throw HttpException(json.decode(response.body)['message']);
     }
   }
 
@@ -216,10 +216,10 @@ class MyBooks with ChangeNotifier {
     }
   }
 
-  Future<void> sendBlockRequest(int bookId) async{
-    final String url = Auth.domain+'/block/book/$bookId';
+  Future<void> sendBlockRequest(int bookId) async {
+    final String url = Auth.domain + '/block/book/$bookId';
     final response = await http.get(url, headers: _header);
-    if(response.statusCode>=300){
+    if (response.statusCode >= 300) {
       final responseData = json.decode(response.body);
       throw HttpException(responseData['messsage']);
     }
