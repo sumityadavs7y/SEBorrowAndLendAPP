@@ -1,4 +1,4 @@
-package com.example.borrow_and_lend_nitc
+package com.nitcalicut.borrow_and_lend_nitc
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

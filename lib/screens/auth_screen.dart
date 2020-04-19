@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:borrow_and_lend_nitc/providers/auth.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,20 @@ enum AuthMode { Signup, Login }
 class AuthScreen extends StatelessWidget {
   static const routeName = '/auth';
 
+  MaterialColor getRandomColor() {
+    List<MaterialColor> colors = [
+      Colors.blue,
+      Colors.purple,
+      Colors.red,
+      Colors.teal,
+      Colors.deepOrange,
+      Colors.green,
+      Colors.amber,
+      Colors.deepPurple
+    ];
+    return colors[Random().nextInt(colors.length)];
+  }
+
   @override
   Widget build(BuildContext context) {
     final deviceSize = MediaQuery.of(context).size;
@@ -18,8 +33,8 @@ class AuthScreen extends StatelessWidget {
           decoration: BoxDecoration(
               gradient: LinearGradient(
             colors: [
-              Color.fromRGBO(215, 117, 255, 1).withOpacity(0.5),
-              Color.fromRGBO(255, 188, 117, 1).withOpacity(0.9),
+              getRandomColor().withOpacity(0.5),
+              getRandomColor().withOpacity(0.9),
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
