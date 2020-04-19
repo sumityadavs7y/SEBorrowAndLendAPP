@@ -4,6 +4,8 @@ The purpose of this flutter project is to develop an app for NITC students to bo
 themselves. This app will help students borrow and lend books more easily as compared to library.
 This app will be in the sole benefit of students only.
 
+Download apk from here : [Borrow and Lend NITC APK](https://github.com/sumityadavs7y/SEBorrowAndLendAPP/blob/master/app.apk?raw=true)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
